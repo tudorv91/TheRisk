@@ -1,4 +1,4 @@
-function[intention] = randomIntention(player, gamestate);
+function[intention] = randomIntention(player, gamestate)
 % This function analyzes the gamestate and provides an intention for a move
 % First, find out which countries this player owns
 

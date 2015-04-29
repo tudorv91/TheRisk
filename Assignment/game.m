@@ -6,6 +6,8 @@ disp(gamestate);
 moves = 10;
 
 % Preallocate statistics 
+ID_customAI = 2;
+ID_randomAI = 1;
 player1_countries = zeros(1,moves);
 player2_countries = zeros(1,moves);
 player1_army = zeros(1,moves);
@@ -23,7 +25,12 @@ for i = 2:moves+1
     
     player = player_at_turn;
     % Make a move
-    intention = randomIntention(player,gamestate);
+    
+%     if player == ID_customAI % Take intention from player
+%         intention = customAIintention(player,gamestate);
+%     elseif player == ID_randomAI
+        intention = randomIntention(player,gamestate);
+%     end
     gamestate = processIntention(intention, gamestate);
     disp(intention);
     disp(gamestate);
