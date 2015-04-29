@@ -6,12 +6,13 @@ function [gamestate] = init()
 % owner 0: Neutral country, has 1 soldier in each country
 % owner 1: Player 1 owns this country, starts with 3 soldiers
 % owner 2: Player 2 owns this country, starts with 3 soldiers
-gamestate =     [1 1 1 235;
-                 2 0 1 167;
-                 3 0 1 16;
-                 4 1 3 5;
-                 5 0 1 14; 
-                 6 2 1 23;
-                 7 2 3 2;
-                ];
+gamestate =     [1 1 1 2367;
+    2 1 5 13;
+    3 0 1 1624;
+    4 1 3 563;
+    5 0 1 46;
+    6 2 1 3541;
+    7 2 3 1;
+    ];
+
 end

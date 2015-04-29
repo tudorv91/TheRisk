@@ -1,6 +1,12 @@
+clc
+close all
+clear
+format compact
+
 % Initialise the game
 gamestate = init();
 disp(gamestate);
+visualizeConn(gamestate);
 
 % Amount of moves
 moves = 10;
@@ -32,6 +38,7 @@ for i = 2:moves+1
         intention = randomIntention(player,gamestate);
 %     end
     gamestate = processIntention(intention, gamestate);
+    disp('intention & gamestate')
     disp(intention);
     disp(gamestate);
     
@@ -55,4 +62,4 @@ for i = 2:moves+1
 end
 
 move = 0:1:moves;
-plot(move, player1_countries, move, player2_countries);
+figure; plot(move, player1_countries, move, player2_countries);

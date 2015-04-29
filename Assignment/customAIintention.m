@@ -9,30 +9,56 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For debugging and design purposes, to be uncommented:
+close all
+clear
+clc
 gamestate = init();
+visualizeConn(gamestate);
 myID = 1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Determine the countries owned by this AI
-myCountries = gamestate(gamestate(:,2)==myID,1)
+myCountries = gamestate(gamestate(:,2)==myID,1);
 
 %% Determine the possible movements 
+nTargets = 0;
 for i = 1:length(myCountries)
-    connectedCountries = num2str(gamestate(myCountries(i),4))
+    connectedCountries = num2str(gamestate(myCountries(i),4));
+    nTargets = nTargets + length(connectedCountries);
 end
 
-% possibleMoves = zeros(,2);
+targets = zeros(nTargets,5);
+k = 0;
 
 for i = 1:length(myCountries)
-    connectedCountries = num2str(gamestate(myCountries(i),4))
+    connectedCountries = num2str(gamestate(myCountries(i),4));
     for j = 1:length(connectedCountries)
-        index = (2*i-1)+j-1
-        possibleMoves((2*i-1)+j-1,:) = [ myCountries(i) str2num(connectedCountries(j))]
+        k = k + 1;
+        connectedCountry = str2double(connectedCountries(j));
+        targets(k,:) = [ myCountries(i) connectedCountry ...
+            gamestate(myCountries(i),3) gamestate(connectedCountry,3) ...
+            gamestate(connectedCountry,2)];
     end
+end 
+
+disp('Table with possible targets')
+disp(array2table(targets,'VariableNames',{'myCountry' 'Target' 'myArmy' 'targetArmy' 'targetOwner'}))
+
+%% Determine best move
+
+possibleMoves = targets(targets(:,3)~= 1,:) % countries with 1 army cannot attack
+
+for i = 1:length(possibleMoves)
+    
 end
 
+player          = myID;
+soldiers        = 42;
+origin_country  = 42;
+dest_country    = 42;
 
-possibleMoves 
+intention   = [player, soldiers, origin_country, dest_country];
+
 
 %% Old code
 % countries_owned = find(gamestate(:,2) == player);
