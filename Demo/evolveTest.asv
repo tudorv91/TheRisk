@@ -1,0 +1,28 @@
+close all
+
+p1 = randi([0 1], 42, 8);
+p2 = randi([0 1], 42, 8);
+
+p1_fit = rand/2;
+p2_fit = rand/2;
+
+child = evolve(p1, p2, p1_fit, p2_fit, 0.1);
+
+% [sz1,sz2]=size(p1);
+% p1=reshape(p1,1,sz1*sz2);
+% p2=reshape(p2,1,sz1*sz2);
+% a=reshape(a,1,sz1*sz2);
+
+for seqIdx = 1:42
+    for bitIdx = 1:8
+        
+        
+
+figure;
+subplot(311),
+imagesc(p1)
+subplot(312),
+imagesc(p2)
+subplot(313),
+imagesc(child)
+;

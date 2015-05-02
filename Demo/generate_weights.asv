@@ -1,0 +1,11 @@
+function weights = generate_weights
+mul_const = 0.01;
+for hIdx = 1:7
+    for inIdx=1:4
+        if inIdx~=1
+            weights(1,inIdx,hIdx) = rand*mul_const;
+            weights(2,inIdx,hIdx) = rand*mul_const;
+        end
+    end
+end
+end
