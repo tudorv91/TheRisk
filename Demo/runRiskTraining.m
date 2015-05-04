@@ -1,39 +1,52 @@
-clear
+close all
 idx = 1;
 %first pass
-for k = 1:100
-for i = 1:1000
-    gamestate = generate_gamestate;
-    inputVect = gamestate';
-    
-    [sz1,sz2]=size(inputVect);
-    inputVect=reshape(inputVect,1,sz1*sz2);
-    [weights, thresholds] = generate_weights;
-    curr = out_MLP([21,7,3],weights, thresholds,gamestate);
-    
-    if checkOutput(gamestate,curr)
-        pool(idx).weights = weights;
-        pool(idx).thresh = thresholds;
-        idx = idx + 1;
+noGamestates = 100;
+majorLoops = 2500;
+desired_pool_size = 100;
+
+if (~exist('pool','var'))
+    gamestates = generate_gamestate_pool(noGamestates);
+    for k = 1:majorLoops
+        for i = 1:noGamestates
+            gamestate = squeeze(gamestates(randi([1 noGamestates],1,1),:,:));
+            inputVect = gamestate';
+            
+            [sz1,sz2]=size(inputVect);
+            inputVect=reshape(inputVect,1,sz1*sz2);
+            [weightsH, weightsOut, thresholds, multipliers] = gen_genotype;
+            curr = out_MLP([21,7,3], weightsH, weightsOut, thresholds, multipliers, gamestate);
+            
+            if checkOutput(gamestate,curr)
+                pool(idx).weightsH = weightsH;
+                pool(idx).weightsOut = weightsOut;
+                pool(idx).multipliers = multipliers;
+                pool(idx).thresh = thresholds;
+                idx = idx + 1;
+            end
+        end
+        disp(['Finished ' int2str(k) ' out of ' int2str(majorLoops)]);
     end
 end
-disp(['Finished ' int2str(k) ' out of 100']);
-end
 
+in_use_pool = pool;
 % second pass
-for passNo = 1:5
+passNo = 1;
+while size(in_use_pool,2)>desired_pool_size
     idx = 1;
-    for i = 1:size(pool,2)
-        gamestate = generate_gamestate;
+    disp(['Executing pass ' int2str(passNo) '. Pool size too big (' ...
+        int2str(size(in_use_pool,2)) '>' int2str(desired_pool_size) ')']);
+    for i = 1:size(in_use_pool,2)
+        gamestate = squeeze(gamestates(randi([1 noGamestates],1,1),:,:));
         inputVect = gamestate';
         
         [sz1,sz2]=size(inputVect);
         inputVect=reshape(inputVect,1,sz1*sz2);
-        curr = out_MLP([21,7,3],pool(i).weights, pool(i).thresh,gamestate);
+        curr = out_MLP([21,7,3],in_use_pool(i).weightsH, in_use_pool(i).weightsOut, ...
+            in_use_pool(i).thresh, in_use_pool(i).multipliers, gamestate);
         
         if checkOutput(gamestate,curr)
-            pool2(idx).weights = pool(i).weights;
-            pool2(idx).thresh = pool(i).thresh;
+            pool2(idx)=in_use_pool(i);
             idx = idx + 1;
         end
     end
@@ -41,43 +54,24 @@ for passNo = 1:5
         break;
     end
     valid(passNo) = idx-1;
-    pool = pool2;
+    in_use_pool = pool2;
     clear pool2
-    disp(['Finished pass' int2str(passNo) ' out of 100']);
+    disp(['Done pass ' int2str(passNo)]);
+    passNo = passNo + 1;
 end
 
-for i = 1:500
-
-parent1_DNA = pool(randi([1 size(pool,2)], 1, 1)).weights;
-parent2_DNA = pool(randi([1 size(pool,2)], 1, 1)).weights;
-child_dna = evolve(parent1_DNA, parent2_DNA, 0.5, 0.5, 0.5);
-
-thresholds = ones(1,10)*0.001;
-pool2(i).weights = child_dna;
-pool2(i).thresh = thresholds;
-end
-
-for passNo = 1:5
-    idx = 1;
-    for i = 1:size(pool,2)
-        gamestate = generate_gamestate;
-        inputVect = gamestate';
-        
-        [sz1,sz2]=size(inputVect);
-        inputVect=reshape(inputVect,1,sz1*sz2);
-        curr = out_MLP([21,7,3],pool(i).weights, pool(i).thresh,gamestate);
+for genIdx = 1:size(in_use_pool,2)
+    in_use_pool(genIdx).fitness = 0;
+    for gStateIdx = 1:noGamestates
+        gamestate = squeeze(gamestates(gStateIdx,:,:));
+        curr = out_MLP([21,7,3],in_use_pool(genIdx).weightsH, in_use_pool(genIdx).weightsOut, ...
+            in_use_pool(genIdx).thresh, in_use_pool(genIdx).multipliers, gamestate);
         
         if checkOutput(gamestate,curr)
-            pool2(idx).weights = pool(i).weights;
-            pool2(idx).thresh = pool(i).thresh;
-            idx = idx + 1;
+            in_use_pool(genIdx).fitness = in_use_pool(genIdx).fitness+1;
         end
     end
-    if idx == 1
-        break;
-    end
-    valid(passNo) = idx-1;
-    pool = pool2;
-    clear pool2
-    disp(['Finished evolution pass' int2str(passNo) ' out of 5']);
 end
+
+% evolve_children_only(in_use_pool,gamestates);
+evolve_with_parents(in_use_pool, gamestates)

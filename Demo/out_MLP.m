@@ -1,4 +1,4 @@
-function out = out_MLP(nnStruct, weights, thresholds, input)
+function out = out_MLP(nnStruct, weightsH, weightsOut, thresholds, multipliers, input)
 
 hiddenOut = zeros(nnStruct(2),1);
 out = zeros(nnStruct(3),1);
@@ -6,26 +6,24 @@ thresholdsIdx = 1;
 
 for hIdx=1:nnStruct(2) % Iterate through input nodes
     % Calculate inputs for the hidden layer
-    const = 0;
     hIn = 0;
-    for xIdx=1:3
-        hIn = hIn+weights(1,xIdx+const,hIdx)*input(xIdx+const);
+    for xIdx=1:nnStruct(1)
+        hIn = hIn+weightsH(xIdx,hIdx)*input(xIdx);
     end
     hIn = hIn - thresholds(thresholdsIdx);
     thresholdsIdx = thresholdsIdx +1;
-    const = const+3;
     % Apply activation function and calculate output
-    hiddenOut(hIdx) = (1/(1+exp(-hIn))-0.5)*500;
+    hiddenOut(hIdx) = (1/(1+exp(-hIn))-0.5)*multipliers(1);
 end
 
 % Apply same step for the output of the network
 for outIdx = 1:nnStruct(3)
     oIn = 0;
     for hIdx = 1:nnStruct(2)
-        oIn = oIn + weights(2,outIdx,hIdx)*hiddenOut(hIdx);
+        oIn = oIn + weightsOut(hIdx,outIdx)*hiddenOut(hIdx);
     end
     oIn = oIn - thresholds(thresholdsIdx);
-    thresholdsIdx = thresholdsIdx +1;
-    out(outIdx) = (1/(1+exp(-oIn))-0.5)*500;
+    thresholdsIdx = thresholdsIdx + 1;
+    out(outIdx) = (1/(1+exp(-oIn))-0.5)*multipliers(2);
 end
 out = round(out);
