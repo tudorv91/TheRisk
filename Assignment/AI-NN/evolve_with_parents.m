@@ -1,7 +1,6 @@
-function evolve_with_parents(pool, gamestates)
+function evolve_with_parents(pool, gamestates, new_fit)
 
-new_fit = 0;
-mutation_rate = 0.1;
+mutation_rate = 0.5;
 figure;
 noGamestates = size(gamestates,1);
 
@@ -10,7 +9,7 @@ noGamestates = size(gamestates,1);
 selection_size = size(pool,2);
 
 [~, indexes] = sort(new_fit);
-pool = pool(indexes(round(end/2):end));
+pool = pool(indexes(round(selection_size/2):end));
 
 for tr_sessions = 1:1000
     idx = 1;
@@ -47,7 +46,7 @@ for tr_sessions = 1:1000
     maxVect(tr_sessions) = max(new_fit);
     
     subplot(211),plot(1:size(meanVect,2),meanVect,'-b',1:size(meanVect,2),maxVect,'-r');
-    subplot(212),hist(new_fit);
+    subplot(212),hist(new_fit,0:0.1:1);
     drawnow;
     
     pool = new_pool;

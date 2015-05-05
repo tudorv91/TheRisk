@@ -2,7 +2,7 @@ close all
 idx = 1;
 %first pass
 noGamestates = 100;
-majorLoops = 2500;
+majorLoops = 250;
 desired_pool_size = 100;
 
 if (~exist('pool','var'))
@@ -14,14 +14,11 @@ if (~exist('pool','var'))
             
             [sz1,sz2]=size(inputVect);
             inputVect=reshape(inputVect,1,sz1*sz2);
-            [weightsH, weightsOut, thresholds, multipliers] = gen_genotype;
-            curr = out_MLP([21,7,3], weightsH, weightsOut, thresholds, multipliers, gamestate);
+            chromosome = gen_chromosome;
+            curr = out_MLP([21,7,3], chromosome, gamestate);
             
             if checkOutput(gamestate,curr)
-                pool(idx).weightsH = weightsH;
-                pool(idx).weightsOut = weightsOut;
-                pool(idx).multipliers = multipliers;
-                pool(idx).thresh = thresholds;
+                pool(idx) = chromosome;
                 idx = idx + 1;
             end
         end
@@ -30,6 +27,7 @@ if (~exist('pool','var'))
 end
 
 in_use_pool = pool;
+
 % second pass
 passNo = 1;
 while size(in_use_pool,2)>desired_pool_size
@@ -42,8 +40,7 @@ while size(in_use_pool,2)>desired_pool_size
         
         [sz1,sz2]=size(inputVect);
         inputVect=reshape(inputVect,1,sz1*sz2);
-        curr = out_MLP([21,7,3],in_use_pool(i).weightsH, in_use_pool(i).weightsOut, ...
-            in_use_pool(i).thresh, in_use_pool(i).multipliers, gamestate);
+        curr = out_MLP([21,7,3],in_use_pool(i), gamestate);
         
         if checkOutput(gamestate,curr)
             pool2(idx)=in_use_pool(i);
@@ -64,8 +61,7 @@ for genIdx = 1:size(in_use_pool,2)
     in_use_pool(genIdx).fitness = 0;
     for gStateIdx = 1:noGamestates
         gamestate = squeeze(gamestates(gStateIdx,:,:));
-        curr = out_MLP([21,7,3],in_use_pool(genIdx).weightsH, in_use_pool(genIdx).weightsOut, ...
-            in_use_pool(genIdx).thresh, in_use_pool(genIdx).multipliers, gamestate);
+        curr = out_MLP([21,7,3], in_use_pool(genIdx), gamestate);
         
         if checkOutput(gamestate,curr)
             in_use_pool(genIdx).fitness = in_use_pool(genIdx).fitness+1;

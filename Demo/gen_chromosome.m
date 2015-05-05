@@ -1,4 +1,4 @@
-function [weightsH, weightsOut, thresholds, multipliers] = gen_genotype
+function chromosome = gen_chromosome
 
 mul_const_weights = 0.01;
 mul_const_thresh = 0.001;
@@ -25,4 +25,9 @@ for i = 1:3
     thresholds(thresholdIdx) = rand*mul_const_thresh;
     thresholdIdx = thresholdIdx + 1;
 end
+
+chromosome.weightsH = weightsH;
+chromosome.weightsOut = weightsOut;
+chromosome.multipliers = multipliers;
+chromosome.thresh = thresholds;
 end
