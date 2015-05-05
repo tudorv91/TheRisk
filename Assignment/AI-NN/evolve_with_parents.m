@@ -1,6 +1,6 @@
-function evolve_with_parents(pool, gamestates, new_fit)
+function evolve_with_parents(pool, nnStruct, gamestates, new_fit)
 
-mutation_rate = 0.5;
+mutation_rate = 1;
 figure;
 noGamestates = size(gamestates,1);
 
@@ -11,18 +11,21 @@ selection_size = size(pool,2);
 [~, indexes] = sort(new_fit);
 pool = pool(indexes(round(selection_size/2):end));
 
-for tr_sessions = 1:1000
+new_fit = 0;
+
+perfect_pool_idx=1;
+for tr_sessions = 1:10000
     idx = 1;
     while idx < selection_size
         firstIdx = randi([1 size(pool,2)], 1, 1);
         secondIdx = randi([1 size(pool,2)], 1, 1);
-        [offspring_1, offspring_2] = evolve_crossover(pool(firstIdx),pool(secondIdx),mutation_rate);
+        [offspring_1, offspring_2] = evolve_clones(pool(firstIdx),pool(secondIdx),mutation_rate);
         
         % Check and compute the offspring's fitness
         for gStateIdx = 1:noGamestates
             gamestate = squeeze(gamestates(gStateIdx,:,:));
-            off1_out = out_MLP([21,7,3], offspring_1, gamestate);
-            off2_out = out_MLP([21,7,3], offspring_2, gamestate);
+            off1_out = out_MLP(nnStruct, offspring_1, gamestate);
+            off2_out = out_MLP(nnStruct, offspring_2, gamestate);
             if checkOutput(gamestate, off1_out)
                 offspring_1.fitness = offspring_1.fitness+1;
             end
@@ -34,13 +37,25 @@ for tr_sessions = 1:1000
         offspring_1.fitness = offspring_1.fitness/noGamestates;
         offspring_2.fitness = offspring_2.fitness/noGamestates;
         
+        if(offspring_1.fitness==1)
+            perfect_pool(perfect_pool_idx) = offspring_1;
+            perfect_pool_idx=perfect_pool_idx+1
+        end
+        
+        if(offspring_2.fitness==1)
+            perfect_pool(perfect_pool_idx) = offspring_2;
+            perfect_pool_idx=perfect_pool_idx+1
+        end
+        
         new_pool(idx) = offspring_1;
         new_fit(idx) = offspring_1.fitness;
         
         idx = idx + 1;
-       
+        
         new_pool(idx) = offspring_2;
         new_fit(idx) = offspring_2.fitness;
+        
+        idx = idx + 1;
     end
     meanVect(tr_sessions) = mean(new_fit);
     maxVect(tr_sessions) = max(new_fit);

@@ -1,9 +1,8 @@
 close all
-clear all
 idx = 1;
 %first pass
-noGamestates = 20;
-majorLoops = 500;
+noGamestates = 100;
+majorLoops = 1000;
 desired_pool_size = 100;
 nnStruct = [63 21 3];
 fit = 0;

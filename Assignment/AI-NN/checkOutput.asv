@@ -15,9 +15,7 @@ if (origin > 7 || origin < 1) || (dest > 7 || dest < 1)
     return
 end
 
-if any(gamestate(find(gamestate(:,1)==1),dest+2))
-    correct = gamestate(origin,1);
-else
-    correct = 0;
-end
+if gamestate(find(gamestate(:,1)==1),2+origin)
+
+correct = gamestate(origin,1);
 end

@@ -1,28 +1,28 @@
-function chromosome = gen_chromosome
+function chromosome = gen_chromosome(nnStruct)
 
 mul_const_weights = 0.01;
-mul_const_thresh = 0.001;
+mul_const_thresh = 0.1;
 thresholdIdx=1;
 
-thresholds = zeros(10,1);
-weightsH = zeros(21,7);
-weightsOut = zeros(7,3);
+thresholds = sum(nnStruct);
+weightsH = zeros(nnStruct(1),nnStruct(2));
+weightsOut = zeros(nnStruct(2),nnStruct(3));
 
 multipliers = randi([1 100], 2, 1);
 
-for hIdx = 1:7
-    thresholds(thresholdIdx) = rand*mul_const_thresh;
+for hIdx = 1:nnStruct(2)
+    thresholds(thresholdIdx) = randn*mul_const_thresh;
     thresholdIdx = thresholdIdx + 1;
-    for inIdx=1:21
-        weightsH(inIdx,hIdx) = rand*mul_const_weights;
+    for inIdx=1:nnStruct(1)
+        weightsH(inIdx,hIdx) = randn*mul_const_weights;
     end
-    for outIdx = 1:3
-        weightsOut(hIdx,outIdx) = rand*mul_const_weights;
+    for outIdx = 1:nnStruct(3)
+        weightsOut(hIdx,outIdx) = randn*mul_const_weights;
     end
 end
 
-for i = 1:3
-    thresholds(thresholdIdx) = rand*mul_const_thresh;
+for i = 1:nnStruct(3)
+    thresholds(thresholdIdx) = randn*mul_const_thresh;
     thresholdIdx = thresholdIdx + 1;
 end
 
