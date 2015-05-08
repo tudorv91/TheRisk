@@ -1,0 +1,14 @@
+TODO
+
+- update gamestate to be symmetrical Rudi
+- update playerAI/customAI to be smarter and give a best move Stephen
+- create a player with a NN implementation that gives a intention and takes as an input the GS plus weights/chromosome Tudor
+- create convenience function findPossibleMoves() Rudi
+- create convenience function rollDice() Rudi
+- convert game to [scorePlayer1, scorePlayer2] = playGame( chromosome player 1, chromosome player 2 ) which outputs the score of the two players after 2 games (so two scores between 6 and 0) Stephen
+- create exec that implements the evolutionary algorithm that uses competition between AI's as a fitness function Tudor (aka evolution + runs)
+
+
+
+LATER:
+- create playGame(chromosome player 1, customAI)
