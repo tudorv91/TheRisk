@@ -4,7 +4,7 @@ clear
 clc
 
 
-n = 100;
+n = 500;
 
 pr_win = zeros(20,20);
 mu_att = zeros(20,20);

@@ -27,8 +27,8 @@ for i = 1:length(myCountries)
     end
 end 
 
-disp('[findPossibleMoves] Table with possible targets')
-disp(array2table(targets,'VariableNames',{'myCountry' 'Target' 'myArmy' 'targetArmy' 'targetOwner'}))
+% disp('[findPossibleMoves] Table with possible targets')
+% disp(array2table(targets,'VariableNames',{'myCountry' 'Target' 'myArmy' 'targetArmy' 'targetOwner'}))
 
 possibleMoves = targets(targets(:,3)~= 1,:); % countries with 1 army cannot attack
 
