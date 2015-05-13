@@ -16,7 +16,8 @@ for i = 1:N
 end
 
 C = triu(C); % only need upper triangle of connection matrix
-figure;
+figure(1);
+clf
 hold on
 r = 1.2; axis([-r r -r r])
 gplot(C,xy, '-')
@@ -30,5 +31,4 @@ army = num2str(gamestate(:,3));
 c = strcat('ID: ',cellstr(countryID),' Army: ',cellstr(army));
 dxy = 0.05; % displacement so the text does not overlay the data points
 text(xy(:,1)+dxy, xy(:,2)+dxy, c);
-
 end

@@ -11,18 +11,22 @@ weightsOut = zeros(nnStruct(2),nnStruct(3));
 multipliers = randi([1 100], 2, 1);
 
 for hIdx = 1:nnStruct(2)
-    thresholds(thresholdIdx) = randn*mul_const_thresh;
-    thresholdIdx = thresholdIdx + 1;
+%     thresholds(thresholdIdx) = randn*mul_const_thresh;
+thresholds(thresholdIdx) = randn*mul_const_thresh;    
+thresholdIdx = thresholdIdx + 1;
     for inIdx=1:nnStruct(1)
-        weightsH(inIdx,hIdx) = randn*mul_const_weights;
+%         weightsH(inIdx,hIdx) = randn*mul_const_weights;
+weightsH(inIdx,hIdx) = randn*mul_const_weights;
     end
     for outIdx = 1:nnStruct(3)
-        weightsOut(hIdx,outIdx) = randn*mul_const_weights;
+%         weightsOut(hIdx,outIdx) = randn*mul_const_weights;
+weightsOut(hIdx,outIdx) = randn*mul_const_weights;
     end
 end
 
 for i = 1:nnStruct(3)
-    thresholds(thresholdIdx) = randn*mul_const_thresh;
+%     thresholds(thresholdIdx) = randn*mul_const_thresh;
+    thresholds(thresholdIdx) = randn;
     thresholdIdx = thresholdIdx + 1;
 end
 
