@@ -1,5 +1,4 @@
 function [] = visualizeConn(gamestate)
-
 % Convert gamestate connections into visual overview
 % Using a connections matrix with 1's indicating connection
 N = length(gamestate);
@@ -18,10 +17,17 @@ end
 
 C = triu(C); % only need upper triangle of connection matrix
 figure;
-gplot(C,xy, '-*')
+hold on
+r = 1.2; axis([-r r -r r])
+gplot(C,xy, '-')
+s = scatter(xy(:,1),xy(:,2),100*gamestate(:,3),gamestate(:,2),'filled');
+s.LineWidth = 0.6;
+s.MarkerEdgeColor = 'b';
 
 % Add text labels to points
-a = [1:N]'; b = num2str(a); c = cellstr(b);
+countryID = num2str(gamestate(:,1));
+army = num2str(gamestate(:,3));
+c = strcat('ID: ',cellstr(countryID),' Army: ',cellstr(army));
 dxy = 0.05; % displacement so the text does not overlay the data points
 text(xy(:,1)+dxy, xy(:,2)+dxy, c);
 

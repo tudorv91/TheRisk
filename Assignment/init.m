@@ -6,13 +6,14 @@ function [gamestate] = init()
 % owner 0: Neutral country, has 1 soldier in each country
 % owner 1: Player 1 owns this country, starts with 3 soldiers
 % owner 2: Player 2 owns this country, starts with 3 soldiers
-gamestate =     [1 1 1 2367;
-    2 1 5 13;
-    3 0 1 1624;
-    4 1 3 563;
-    5 0 1 46;
-    6 2 1 3541;
-    7 2 3 1;
+gamestate =     [1 0 2 2467;
+    2 1 20 13;
+    3 0 3 624;
+    4 0 3 153;
+    5 2 20 46;
+    6 0 2 3517;
+    7 0 3 16;
     ];
+% visualizeConn(gamestate)
 
 end
