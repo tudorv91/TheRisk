@@ -11,11 +11,10 @@ for i=1:100
         gs = processIntention(intention, gs);
         player = 2;
     else
-        intention = randomIntention(player, gs);
+        intention = probablisticIntention(player, gs);
         gs = processIntention(intention, gs);
         player = 1;
     end
-    pause(0.5);
+%     pause(0.5);
     visualizeConn(gs);
 end
-

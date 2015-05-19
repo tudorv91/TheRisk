@@ -1,4 +1,4 @@
-%function[intention] = probablisticIntention(player, gamestate)
+function intention = probablisticIntention(player, gamestate)
 countries_owned = find(gamestate(:,2) == player);
 intention = zeros(length(countries_owned), 4);
 for r=1:length(countries_owned)
