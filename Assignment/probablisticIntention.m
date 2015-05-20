@@ -1,32 +1,34 @@
 function intention = probablisticIntention(player, gamestate)
-countries_owned = find(gamestate(:,2) == player);
-intention = zeros(length(countries_owned), 4);
-for r=1:length(countries_owned)
+
+%countries_owned = find(gamestate(:,2) == player);
+%intention = zeros(length(countries_owned), 4);
+%for r=1:length(countries_owned)
     % Find the connections of the r'th country
-    connection = num2str(gamestate(countries_owned(r),4));
+%    connection = num2str(gamestate(countries_owned(r),4));
     % Find out which one of these the player doesn't own
     % find(gamestate(str2num(connection), 2 ~= player))
     % Predefine targets and owners
-    targets = zeros(1, length(connection));
-    owners = zeros(1, length(connection));
-    for i=1:length(connection)
+ %   targets = zeros(1, length(connection));
+ %   owners = zeros(1, length(connection));
+ %   for i=1:length(connection)
         % Make vector of targets
-        targets(i) = str2num(connection(i));
+ %       targets(i) = str2num(connection(i));
         % List the owners of these targets
-        owners(i) = gamestate(targets(i),2);
-    end
+ %       owners(i) = gamestate(targets(i),2);
+ %   end
     % Indices of targets where owner is not current player
-    attacktargets = find(owners ~= player);
-    if length(attacktargets) >= 1
-        target_selector = randi([1 length(attacktargets)]);
-        attacktarget = targets(target_selector);
+ %   attacktargets = find(owners ~= player);
+ %   if length(attacktargets) >= 1
+ %       target_selector = randi([1 length(attacktargets)]);
+ %       attacktarget = targets(target_selector);
         %target = str2num(target);
-        if gamestate(countries_owned(r), 3) > 1
-            intention(r,:) = [player, gamestate(countries_owned(r), 3) - 1, countries_owned(r), attacktarget];    
-        end
-        intention(~any(intention,2),:) =[];
-    end
-end
+ %       if gamestate(countries_owned(r), 3) > 1
+ %           intention(r,:) = [player, gamestate(countries_owned(r), 3) - 1, countries_owned(r), attacktarget];    
+ %       end
+ %       intention(~any(intention,2),:) =[];
+ %   end
+%end
+intention = findPossibleMoves(player, gamestate);
 %%
 % Now we have a list of intentions, our AI should analyse these to find the
 % one with the best chance of succes. It does this by a 'simulation' of the
