@@ -1,4 +1,4 @@
-function [attArmyEnd, defArmyEnd] = rollDice(attArmy,defArmy)
+function [attArmyEnd, defArmyEnd] = rollDice2Death(attArmy,defArmy)
 % fight to the death dice roll
 if attArmy == 0
    disp('[rollDice] You just tried to attack with 0 armies')
@@ -6,6 +6,7 @@ elseif defArmy == 0
    disp('[rollDice] You just tried to attack a country with 0 armies')
 else
 
+while attArmy ~= 0 && defArmy ~= 0
 switch attArmy
     case 1
         switch defArmy
@@ -41,6 +42,7 @@ switch attArmy
                 defArmy = defArmy - attArmyWin;
                 attArmy = attArmy - 2 + attArmyWin;
         end     
+end
 end
 end
 

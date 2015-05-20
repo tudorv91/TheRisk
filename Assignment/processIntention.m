@@ -47,7 +47,7 @@ elseif player_id ~= owner_of_dest_country
     soldiers_defending = gs(dest_country, 3);
     if (soldiers_defending == 0); disp('[processIntention] soldiers defending = 0'); end
     
-    [soldiers_attacked, soldiers_defended] = rollDice(soldiers_moving,soldiers_defending);
+    [soldiers_attacked, soldiers_defended] = rollDice2Death(soldiers_moving,soldiers_defending);
     
     if soldiers_defended == 0
         % Attacker wins, update state
