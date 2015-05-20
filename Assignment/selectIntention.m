@@ -10,7 +10,7 @@ end
 % If more than intention results in a MAX value, output the first one
 selected_move = possible_int(idx(1),:);
 intention(1) = 1;
-intention(2) = selected_move(3);
+intention(2) = selected_move(3)-1;
 intention(3) = selected_move(1);
 intention(4) = selected_move(2);
 end

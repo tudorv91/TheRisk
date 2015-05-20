@@ -71,5 +71,9 @@ for i = 1:size(intention,1)
     end
 end
 % Pick the highest probability intention
-intention = intention(find(probability == max(probability)),:)
+intention = intention(probability == max(probability),:);
+intentionsize = size(intention);
+if intentionsize(1) >= 2
+    intention = intention(randi(intentionsize),:);
+end
 %end
