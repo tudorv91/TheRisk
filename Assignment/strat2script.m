@@ -16,13 +16,6 @@ while notWon && nRounds<100
         disp('turn of player 1')
         chromosome = gen_chromosome(nnStruct);
         intention = selectIntention(chromosome, gs, nnStruct, player);
-
-        possibleMoves = findPossibleMoves(myID, gs);
-        intention = selectIntention(chromosome, possibleMoves, nnStruct);
-        if intention == 0
-            winner = player2;
-            break;
-        end
         gs = processIntention(intention, gs);
         visualizeConn(gs);
         player = 2;
