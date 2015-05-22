@@ -28,13 +28,18 @@ function intention = probablisticIntention(player, gamestate)
  %       intention(~any(intention,2),:) =[];
  %   end
 %end
-intention = findPossibleMoves(player, gamestate);
+possible_moves = findPossibleMoves(player, gamestate);
+if any(possible_moves)==0
+    intention = [0 0 0 0]
+    return
+end
+
 %%
 % Now we have a list of intentions, our AI should analyse these to find the
 % one with the best chance of succes. It does this by a 'simulation' of the
 % intention processing.
-probability = zeros(size(intention,1),1);
-for i = 1:size(intention,1)
+probability = zeros(size(possible_moves,1),1);
+for i = 1:size(possible_moves,1)
     % Process this intention 10 times, see how many of the battles were 
     % and make a percentage of this.
     % processIntention(intenion(i), gamestate)
@@ -42,26 +47,26 @@ for i = 1:size(intention,1)
     % then this is a victory, else this is a loss.
     % Repeat 10 times
     % calculate win probability and add this to the intention vector
-    player_id = intention(i,1);
-    soldiers = intention(i,2);
-    origin_country = intention(i,3);
-    dest_country = intention(i,4);
+    player_id = possible_moves(i,5);
+    soldiers_att = possible_moves(i,3) - 1;
+    soldiers_def = possible_moves(i,4);
+    origin_country = possible_moves(i,1);
+    dest_country = possible_moves(i,2);
 
     % Look up the owner of dest country 
     owner_of_dest_country = gamestate(dest_country,2);
     % Check if this owner is the same as the player playing
-    if player_id == owner_of_dest_country
+    if player == owner_of_dest_country
         % Simply move soldiers to this country
         %gamestate(dest_country, 3) = gamestate(dest_country,3) + soldiers;
     else
         % Country does not belong to player playing, he is attacking
         % How many defending soldiers?
-        amountofwins = 0;
-        trials = 10;
+        amountofwins    = 0;
+        trials          = 10;
         for j = 1:trials
-            soldiers_defending = gamestate(dest_country, 3);
-            attacker_chance = randi([1 6 * soldiers]);
-            defender_chance = randi([1 6 * soldiers_defending]);
+            attacker_chance = randi([1 6 * soldiers_att]);
+            defender_chance = randi([1 6 * soldiers_def]);
             if attacker_chance > defender_chance
                 % Attacker wins, update state
                 amountofwins = amountofwins + 1;
@@ -72,10 +77,13 @@ for i = 1:size(intention,1)
         probability(i) = amountofwins / trials * 100;
     end
 end
+
 % Pick the highest probability intention
-intention = intention(probability == max(probability),:);
-intentionsize = size(intention);
-if intentionsize(1) >= 2
-    intention = intention(randi(intentionsize),:);
+possible_moves = possible_moves(probability == max(probability),:);
+
+if size(possible_moves,1) >= 2
+    possible_moves = possible_moves(randi(size(possible_moves,1)),:);
 end
+
+intention = [player possible_moves(3)-1 possible_moves(1) possible_moves(2)];
 %end

@@ -13,7 +13,8 @@ function [gs] = processIntention(intention,gs)
 
 %% Check if intention is valid
 if any(intention)==0
-    disp('[processIntention] intention has zeros')
+    disp('[processIntention] intention has all zeros')
+    intention
     pause(1)
     return
 end

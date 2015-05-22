@@ -2,6 +2,7 @@ format compact
 clc
 clear
 close all
+addpath('AI-NN')
 
 nnStruct = [3 10 1];
 myID = 1;
@@ -15,13 +16,16 @@ for i=1:100
         possibleMoves = findPossibleMoves(myID, gs);
         intention = selectIntention(chromosome, possibleMoves, nnStruct);
         gs = processIntention(intention, gs);
+        visualizeConn(gs);
         player = 2;
+            
     else
         disp('turn of player 2')
         intention = probablisticIntention(player, gs);
         gs = processIntention(intention, gs);
+        visualizeConn(gs);
         player = 1;
     end
-%     pause(0.5);
-    visualizeConn(gs);
+    pause(0.1);
+    
 end

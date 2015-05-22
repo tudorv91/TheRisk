@@ -7,10 +7,10 @@ function [gamestate] = init()
 % owner 1: Player 1 owns this country, starts with 3 soldiers
 % owner 2: Player 2 owns this country, starts with 3 soldiers
 gamestate =     [1 0 2 2467;
-    2 1 20 13;
+    2 1 30 13;
     3 0 3 624;
     4 0 3 153;
-    5 2 20 46;
+    5 2 30 46;
     6 0 2 3517;
     7 0 3 16;
     ];
