@@ -15,5 +15,4 @@ gamestate =     [1 0 2 2467;
     7 0 3 16;
     ];
 visualizeConn(gamestate)
-
 end

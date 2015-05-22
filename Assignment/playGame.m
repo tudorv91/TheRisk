@@ -1,4 +1,7 @@
 function[scorePlayer1, scorePlayer2] = playGame(player1, player2)
+%player1/player2 is a string format "probabilistic" or "random" or
+%"NN"
+
 scorePlayer1 = 0; scorePlayer2 = 0;
 % Both games should have the same gamestate
 gamestate = init();

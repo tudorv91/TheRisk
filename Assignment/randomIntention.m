@@ -34,6 +34,10 @@ for r=1:length(countries_owned)
     end
 end
 % Now there exists an array of  options, pick one
-random_action_selector = randi([1 size(intention,1)]);
-intention = intention(random_action_selector,:);
+if size(intention, 1) > 0
+    random_action_selector = randi([1 size(intention,1)]);
+    intention = intention(random_action_selector,:);
+else
+    intention = [0 0 0 0];
+end
 end
