@@ -9,12 +9,13 @@ myID = 1;
 player = 1;
 figure;
 gs = init();
-for i=1:100
+nRounds=0;
+notWon = true;
+while notWon && nRounds<100
     if player==1
         disp('turn of player 1')
         chromosome = gen_chromosome(nnStruct);
-        possibleMoves = findPossibleMoves(myID, gs);
-        intention = selectIntention(chromosome, possibleMoves, nnStruct);
+        intention = selectIntention(chromosome, gs, nnStruct, player);
         gs = processIntention(intention, gs);
         visualizeConn(gs);
         player = 2;
@@ -26,6 +27,10 @@ for i=1:100
         visualizeConn(gs);
         player = 1;
     end
-    pause(0.1);
+    nRounds = nRounds+1;
+    
+    [notWon, victor] = whoWon(gs);
+    
+    pause(0);
     
 end

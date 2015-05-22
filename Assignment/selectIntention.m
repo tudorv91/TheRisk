@@ -1,4 +1,12 @@
-function intention = selectIntention(chromosome, possible_int, nnStruct)
+function intention = selectIntention(chromosome, gs, nnStruct, myID)
+
+possible_int = findPossibleMoves(myID, gs);
+if isempty(possible_int)
+    intention = 0;
+    return
+end
+
+
 
 results = zeros(size(possible_int,1),1);
 for i=1:size(possible_int,1)

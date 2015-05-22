@@ -31,7 +31,7 @@ end
 % disp(array2table(targets,'VariableNames',{'myCountry' 'Target' 'myArmy' 'targetArmy' 'targetOwner'}))
 
 possibleMoves = targets(targets(:,3)~= 1,:); % countries with 1 army cannot attack
-if isempty(possibleMoves)
-    possibleMoves = [0 0 0 0 0]
-end
+% if isempty(possibleMoves)
+%     possibleMoves = [0 0 0 0 0]
+% end
 end

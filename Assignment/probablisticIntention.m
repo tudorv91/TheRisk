@@ -30,7 +30,10 @@ function intention = probablisticIntention(player, gamestate)
 %end
 possible_moves = findPossibleMoves(player, gamestate);
 if any(possible_moves)==0
-    intention = [0 0 0 0]
+    disp('[probIntent] no possible moves ==> intention = []')
+%     possible_moves
+    intention = [];
+%     intention = [0 0 0 0]
     return
 end
 
@@ -47,6 +50,7 @@ for i = 1:size(possible_moves,1)
     % then this is a victory, else this is a loss.
     % Repeat 10 times
     % calculate win probability and add this to the intention vector
+    
     player_id = possible_moves(i,5);
     soldiers_att = possible_moves(i,3) - 1;
     soldiers_def = possible_moves(i,4);

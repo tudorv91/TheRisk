@@ -14,8 +14,8 @@ function [gs] = processIntention(intention,gs)
 %% Check if intention is valid
 if any(intention)==0
     disp('[processIntention] intention has all zeros')
-    intention
-    pause(1)
+%     intention;
+    pause(0)
     return
 end
 
@@ -26,11 +26,11 @@ dest_country = intention(4);
 
 if gs(origin_country,3)-soldiers_moving ==0
     disp('[processIntention] moving soldiers results in leaving a country with 0 soldiers')
-    pause(1)
+    pause(0)
     return
 elseif gs(dest_country,3)==0
     disp('[processIntention] moving soldiers to a country with 0 soldiers')
-    pause(1)
+    pause(0)
     return
 end
 
