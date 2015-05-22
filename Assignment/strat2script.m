@@ -15,10 +15,13 @@ for i=1:100
         chromosome = gen_chromosome(nnStruct);
         possibleMoves = findPossibleMoves(myID, gs);
         intention = selectIntention(chromosome, possibleMoves, nnStruct);
+        if intention == 0
+            winner = player2;
+            break;
+        end
         gs = processIntention(intention, gs);
         visualizeConn(gs);
         player = 2;
-            
     else
         disp('turn of player 2')
         intention = probablisticIntention(player, gs);
@@ -26,6 +29,4 @@ for i=1:100
         visualizeConn(gs);
         player = 1;
     end
-    pause(0.1);
-    
 end
