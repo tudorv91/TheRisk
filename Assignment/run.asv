@@ -2,15 +2,28 @@ format compact
 clc
 clear
 close all
-addpath('AI-NN')
+addpath('./AI-NN')
 
-nnStruct = [3 10 1];
-myID = 1;
-player = 1;
-figure;
-gs = init();
-nRounds=0;
-notWon = true;
+% Section to
+global nnStruct chromosome noRounds viewGameDevelopment pauseTime;
 
+viewGameDevelopment = 1;
+nnStruct = [3 3 1];
 chromosome = gen_chromosome(nnStruct);
-[player1_score, player2_score
+noRounds = 1000;
+pauseTime = 0.1;
+
+% The next two variables are function handles for the typesof player. 
+% Since both intention output functions accept the same arguments (in the same
+% order), we can call the handles without distinction later in the code,
+% with the same arguments. 
+
+% E.G. Let's say we want player1 to be an AI NN, 
+% we say: player1_handle = @intentionAI
+% if we want it to be a probabilistic one, we say:
+% player1_handle = @probablisticIntention
+
+player1_handle = @intentionAI;
+player2_handle = @probablisticIntention;
+
+[player1_score, player2_score] = playGame(player1_handle, player2_handle);
