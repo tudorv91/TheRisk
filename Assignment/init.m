@@ -14,6 +14,6 @@ gamestate =     [1 0 2 2467;
     6 0 2 3517;
     7 0 3 16;
     ];
-visualizeConn(gamestate)
+% visualizeConn(gamestate)
 
 end

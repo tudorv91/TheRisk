@@ -1,0 +1,16 @@
+format compact
+clc
+clear
+close all
+addpath('AI-NN')
+
+nnStruct = [3 10 1];
+myID = 1;
+player = 1;
+figure;
+gs = init();
+nRounds=0;
+notWon = true;
+
+chromosome = gen_chromosome(nnStruct);
+[player1_score, player2_score
