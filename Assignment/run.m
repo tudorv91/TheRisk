@@ -6,13 +6,14 @@ addpath('./AI-NN')
 
 % Section used for globals (avoid transmitting all parameters as arguments)
 % All initial game conditions should be specified here (session setup)
-global nnStruct chromosome noRounds viewGameDevelopment pauseTime;
+global nnStruct chromosome noRounds viewGameDevelopment pauseTime nIncome;
 
 viewGameDevelopment = 1;
 nnStruct = [3 3 1];
 chromosome = gen_chromosome(nnStruct);
-noRounds = 1000;
-pauseTime = 0.1;
+noRounds = 100;
+pauseTime = 0.5;
+nIncome = 2;
 
 % The next two variables are function handles for the typesof player. 
 % Since both intention output functions accept the same arguments (in the same

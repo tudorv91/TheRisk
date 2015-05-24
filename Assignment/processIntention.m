@@ -11,6 +11,9 @@ function [gs] = processIntention(intention,gs)
 % assume the defender defends with everything. Roll a dice based on the
 % soldier numbers and higher number wins. Update the state.
 
+global nIncome;
+
+
 %% Check if intention is valid
 if any(intention)==0
     disp('[processIntention] intention has all zeros')
@@ -44,7 +47,6 @@ if player_id == owner_of_dest_country
     gs(origin_country, 3) = gs(origin_country,3) - soldiers_moving;
 elseif player_id ~= owner_of_dest_country
     % Country does not belong to player playing, he is attacking
-    % How many defending soldiers?
     soldiers_defending = gs(dest_country, 3);
     if (soldiers_defending == 0); disp('[processIntention] soldiers defending = 0'); end
     
@@ -66,8 +68,9 @@ else
     disp('player_id is apparantly something weird')
 end
 
-% if any(gs(:,2) == 1) || any(gs(:,2) == 2)
-%     disp('someone has won')
-% end
+% Update the gs with a certain income for the players. 
+% gs(gs(:,2)==1,3) = gs(gs(:,2)==1,3)+nIncome;
+% gs(gs(:,2)==2,3) = gs(gs(:,2)==2,3)+nIncome;
+
 
 end

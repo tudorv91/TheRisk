@@ -1,6 +1,6 @@
 function victor = game(player1, player2, init_gs)
 
-global noRounds viewGameDevelopment pauseTime
+global noRounds viewGameDevelopment pauseTime nIncome
 roundIdx = 0;
 
 notWon = true;
@@ -10,18 +10,11 @@ noMoves = 0;
 
 while notWon && roundIdx<noRounds && ~noMoves
     if player==1
-        %         disp('turn of player 1');
-        intention = player1(1, gs);
-        gs = processIntention(intention, gs);
+        gs = turn(player1,player,gs);
         player = 2;
     else
-        %         disp('turn of player 2')
-        intention = player2(2, gs);
-        gs = processIntention(intention, gs);
+        gs = turn(player2,player,gs);
         player = 1;
-    end
-    if viewGameDevelopment
-        visualizeConn(gs);
     end
     roundIdx = roundIdx+1;
     [notWon, victor] = whoWon(gs);
