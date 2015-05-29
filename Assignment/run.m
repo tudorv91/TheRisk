@@ -9,10 +9,10 @@ addpath('./AI-NN')
 global nnStruct chromosome noRounds viewGameDevelopment pauseTime nIncome;
 
 viewGameDevelopment = 1;
-nnStruct = [3 3 1];
+nnStruct = [3 10 1];
 chromosome = gen_chromosome(nnStruct);
 noRounds = 100;
-pauseTime = 0.5;
+pauseTime = 0.1;
 nIncome = 2;
 
 % The next two variables are function handles for the typesof player. 

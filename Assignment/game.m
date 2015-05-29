@@ -1,6 +1,6 @@
 function victor = game(player1, player2, init_gs)
 
-global noRounds viewGameDevelopment pauseTime nIncome
+global noRounds pauseTime 
 roundIdx = 0;
 
 notWon = true;
@@ -17,7 +17,10 @@ while notWon && roundIdx<noRounds && ~noMoves
         player = 1;
     end
     roundIdx = roundIdx+1;
-    [notWon, victor] = whoWon(gs);
+    [notWon, victor] = whoWon(gs);  % Default victor = 0 & notWon = true
+    if notWon == false && roundIdx == noRounds
+        disp('[game] is a tie')        
+    end
     pause(pauseTime);
 end
 
