@@ -34,4 +34,5 @@ chromosome.weightsH = weightsH;
 chromosome.weightsOut = weightsOut;
 chromosome.multipliers = multipliers;
 chromosome.thresh = thresholds;
+chromosome.fitness = 0;
 end

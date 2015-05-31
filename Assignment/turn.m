@@ -1,7 +1,9 @@
 function gs = turn(player_handle, player, gs)
 
 global viewGameDevelopment nIncome
-disp([ '[turn] of player: ' num2str(player)] );
+if viewGameDevelopment
+    disp([ '[turn] of player: ' num2str(player)] );
+end
 
 %% Give the player its income
 gs(gs(:,2)==player,3) = gs(gs(:,2)==player,3)+nIncome;

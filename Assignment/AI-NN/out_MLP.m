@@ -15,6 +15,7 @@ for hIdx=1:nnStruct(2) % Iterate through input nodes
     hIn = hIn - chromosome.thresh(thresholdsIdx);
     thresholdsIdx = thresholdsIdx +1;
     hiddenOut(hIdx) = (1/(1+exp(-hIn))-0.5)*chromosome.multipliers(1);
+%     hiddenOut(hIdx) = 1/(1+exp(-hIn));
 end
 
 % Apply same step for the output of the network
@@ -26,6 +27,7 @@ for outIdx = 1:nnStruct(3)
     oIn = oIn - chromosome.thresh(thresholdsIdx);
     thresholdsIdx = thresholdsIdx + 1;
     out(outIdx) = (1/(1+exp(-oIn))-0.5)*chromosome.multipliers(2);
+%     out(outIdx) = 1/(1+exp(-oIn));    
 %     out(outIdx) = oIn;
 end
 out = round(out);

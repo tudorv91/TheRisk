@@ -2,15 +2,18 @@ function [clone, offspring] = evolve_clones(parent1, parent2, mutation_rate)
 
 crossover_rate = 1;
 
-if parent1.fitness > parent2.fitness
+if parent1.fitness < parent2.fitness
     clone = parent1;
     offspring = parent2;
 else
     clone = parent2;
     offspring = parent1;
 end
+
+divisor = offspring.fitness + clone.fitness;
 mutation_epochs = round((numel(offspring.weightsH) + numel(offspring.weightsOut))/10);
-mr = (1-offspring.fitness)*mutation_rate;
+mr = offspring.fitness*mutation_rate/divisor;
+% mr = (1-offspring.fitness/divisor)*mutation_rate;
 
 enableCross = round(crossover_rate * rand);
 if enableCross
