@@ -1,8 +1,12 @@
-function pool = evolve(prev_pool)
+function [pool] = evolve(prev_pool)
 
 global poolSize mutation_rate
 
-curr_pool_size = size(prev_pool,2);
+%Changed current pool size because it otherwise never starts if prev_pool =
+%poolSize
+% curr_pool_size = size(prev_pool,2);
+curr_pool_size = 0; 
+
 counter = 1;
 
 if size(prev_pool,2) == 0
