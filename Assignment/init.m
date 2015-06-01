@@ -1,4 +1,4 @@
-function [gamestate] = init()
+function [gamestate, connCountries] = init()
 % Gamestate is given as a matrix where the rows are each the situation of
 % the country. The columns give the attributes of the countries.
 
@@ -14,6 +14,16 @@ gamestate =     [1 0 2 2467;
     6 0 2 3517;
     7 0 3 16;
     ];
-% visualizeConn(gamestate)
+
+connCountries = [0 1 0 1 0 1 1;
+ 1 0 1 0 0 0 0;
+ 0 1 0 1 0 1 0;
+ 1 0 1 0 1 0 0;
+ 0 0 0 1 0 1 0;
+ 1 0 1 0 1 0 1;
+ 1 0 0 0 0 1 0;
+ ];
+
+%visualizeConn(gamestate)
 
 end
