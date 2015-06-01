@@ -69,9 +69,9 @@ function intention = probablisticIntention(player, gamestate)
             probability(i) = amountofwins / trials * 100;
         end      
     end
-    disp(probability); % P(we take it) (except for countries already belonging to player
+    %disp(probability); % P(we take it) (except for countries already belonging to player
     %disp(average_invaders);
-    disp(surroundingEnemyArmy);
+    %disp(surroundingEnemyArmy);
     
     % Let surrounding enemy army also play a role
     % multiply probabilities with a factor. * 1.0 for the lowest amount of
@@ -83,8 +83,8 @@ function intention = probablisticIntention(player, gamestate)
     a = (0.5 - 1) / (highestSurroundingEnemyArmy - lowestSurroundingEnemyArmy);
     b = 1.0 - a * lowestSurroundingEnemyArmy;
     factors = a * SRA + b;
-    disp(factors);
-    disp(probability .* factors);
+    %disp(factors);
+    %disp(probability .* factors);
     probability = probability .* factors; %this lets the AI take the safest route
     
     % Pick the highest probability intention
