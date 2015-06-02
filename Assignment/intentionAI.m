@@ -13,7 +13,7 @@ end
 results = zeros(size(possible_int,1),1);
 for i=1:size(possible_int,1)
     % Retrieve decision weights (
-   results(i) = out_MLP(nnStruct, chromosome, squeeze(possible_int(i,:)));
+   results(i) = out_MLP(nnStruct, chromosome, possible_int(i,:));
 end
 
 [~, idx] = max(results);

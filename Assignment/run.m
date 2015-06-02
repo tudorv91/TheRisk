@@ -82,9 +82,11 @@ for runNo = 1:evolutionRuns
 end;
 
 %% Evolve by competition
-scores = zeros(poolSize_local,1);
+max_fitness = zeros(evolutionRuns,1);
+figure;
 for runNo = 1:evolutionRuns
-    
+    scores = zeros(poolSize_local,1);
+
     %Setup competition, add scores for fitness
     for idx = 1:poolSize_local
         for jdx = 1:poolSize_local
@@ -99,12 +101,16 @@ for runNo = 1:evolutionRuns
         disp([int2str(idx) '/' int2str(poolSize_local)])
     end
     
-    socres_norm = norm(scores-min(scores)+1);
+    scores_norm = normc(scores-min(scores)+1);
     for idx = 1:poolSize_local
-        chromosomePool(idx).fitness = scores(idx);
+        chromosomePool(idx).fitness = scores_norm(idx);
     end
     
     if runNo~= evolutionRuns
         chromosomePool = evolve(chromosomePool);
     end;
+    max_fitness(runNo)=max(scores);
+    disp(runNo)
+    subplot(211),plot(max_fitness);
+    subplot(212),hist(scores);
 end
