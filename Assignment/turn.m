@@ -2,7 +2,7 @@ function gs = turn(player_handle, player, gs)
 
 global viewGameDevelopment nIncome
 if viewGameDevelopment
-    disp([ '[turn] of player: ' num2str(player)] );
+%     disp([ '[turn] of player: ' num2str(player)] );
 end
 
 %% Give the player its income
