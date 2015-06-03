@@ -1,6 +1,6 @@
-function intention = intentionAI(myID, gs)
+function intention = intentionAI2(myID, gs)
 
-global nnStruct chromosome
+global nnStruct chromosome2
 % Find all possible moves for the NN AI
 possible_int = findPossibleMoves(myID, gs);
 if isempty(possible_int)
@@ -13,7 +13,7 @@ end
 results = zeros(size(possible_int,1),1);
 for i=1:size(possible_int,1)
     % Retrieve decision weights (
-   results(i) = out_MLP(nnStruct, chromosome, possible_int(i,:));
+   results(i) = out_MLP(nnStruct, chromosome2, squeeze(possible_int(i,:)));
 end
 
 [~, idx] = max(results);
