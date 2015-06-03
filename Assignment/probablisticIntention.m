@@ -81,8 +81,8 @@ function intention = probablisticIntention(player, gamestate)
     highestSurroundingEnemyArmy = SRA(find(SRA == max(SRA))); % 0.5
     lowestSurroundingEnemyArmy = SRA(find(SRA == min(SRA))); % 1.0
     a = (0.5 - 1) / (highestSurroundingEnemyArmy - lowestSurroundingEnemyArmy);
-    b = 1.0 - a * lowestSurroundingEnemyArmy;
-    factors = a * SRA + b;
+    b = (1.0 - a * lowestSurroundingEnemyArmy) * ones(length(SRA),1);
+    factors = a(1) * SRA + b;
     %disp(factors);
     %disp(probability .* factors);
     probability = probability .* factors; %this lets the AI take the safest route
