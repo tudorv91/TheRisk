@@ -16,10 +16,10 @@ chromosome2 = gen_chromosome(nnStruct);
 noRounds = 100;
 pauseTime = 0;
 nIncome = 2;
-poolSize = 40;
+poolSize = 75;
 mutation_rate = 0.1;
-evolutionRuns = 30;
-competitionRuns = 10;
+evolutionRuns = 20;
+competitionRuns = 40;
 
 % The next two variables are function handles for the typesof player.
 % Since both intention output functions accept the same arguments (in the same
@@ -129,6 +129,51 @@ for runNo = 1:competitionRuns
     max_score(runNo)=max(scores);
     disp(runNo)
     
-    subplot(211),plot(max_score(max_scores~=0));
+    subplot(211),plot(max_score(max_score~=0));
     subplot(212),hist(scores);
+end
+
+player2_handle = @probablisticIntention;
+
+chromosomePoolAfterItselfCompetition = chromosomePool;
+
+%% Evolve by competition
+max_score = zeros(competitionRuns,1);
+scores_AI = zeros(competitionRuns,1);
+figure;
+for runNo = 1:competitionRuns
+    poolSizeComp = length(chromosomePool);
+    scores = zeros(poolSizeComp,1);
+    scoreAI = 0;
+    %Setup competition, add scores for fitness
+    for idx = 1:poolSizeComp
+        for jdx = 1:poolSizeComp
+            if idx ~= jdx
+                chromosome = chromosomePool(idx);
+%                 chromosome2 = chromosomePool(jdx);
+                [score1, score2] = playGame(player1_handle,player2_handle);
+                scores(idx) = scores(idx) + score1;
+                scoreAI = scoreAI + score2;
+            end
+        end
+        disp([int2str(idx) '/' int2str(poolSizeComp)])
+    end
+    
+    
+    scores_norm = normc(scores-min(scores)+1);
+    for idx = 1:poolSizeComp
+        chromosomePool(idx).fitness = 1./scores_norm(idx);
+    end
+    
+    if runNo~= competitionRuns
+        chromosomePool = evolve(chromosomePool);
+    end;
+    
+    max_score(runNo)=max(scores);
+    scores_AI(runNo)=scoreAI;
+    disp(runNo)
+    
+    subplot(311),plot(max_score(max_score~=0));
+    subplot(312),hist(scores);
+    subplot(313),plot(scores_AI);
 end

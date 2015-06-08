@@ -5,7 +5,7 @@ global poolSize mutation_rate
 prev_pool_size = size(prev_pool,2);
 curr_pool_size = 0;
 
-if prev_pool_size>=poolSize
+if prev_pool_size>poolSize
     disp('[evolve] prev_pool >= poolSize')
     keyboard
 elseif prev_pool_size == 0
@@ -38,4 +38,9 @@ while(curr_pool_size < poolSize)
     counter = counter + 1;
     curr_pool_size = size(pool,2);
 end
+
+if curr_pool_size == poolSize+1
+   pool(end) = []; 
+end
+
 end
