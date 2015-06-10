@@ -78,8 +78,8 @@ function intention = probablisticIntention(player, gamestate)
     % enemies, *0.5 for the highest amount of enemies and linearise in
     % between.
     SRA = surroundingEnemyArmy;
-    highestSurroundingEnemyArmy = SRA(find(SRA == max(SRA))); % 0.5
-    lowestSurroundingEnemyArmy = SRA(find(SRA == min(SRA))); % 1.0
+    highestSurroundingEnemyArmy = SRA(unique(SRA == max(SRA))); % 0.5
+    lowestSurroundingEnemyArmy = SRA(unique(SRA == min(SRA))); % 1.0
     a = (0.5 - 1) / (highestSurroundingEnemyArmy - lowestSurroundingEnemyArmy);
     b = (1.0 - a * lowestSurroundingEnemyArmy) * ones(length(SRA),1);
     factors = a(1) * SRA + b;
